@@ -24,7 +24,6 @@ public class GUI extends JFrame{
 		panel = new JPanel(new BorderLayout());
 		addMainPanel();
 		addDicePanel();
-		
 		add(panel);
 	}
 	
@@ -81,11 +80,11 @@ public class GUI extends JFrame{
 		kategoriaLabels[15] = new JLabel("Cdo rast ");
 		kategoriaLabels[16] = new JLabel("Piket e poshtme ");
 		kategoriaLabels[17] = new JLabel("TOTAL ");
-		
+
 		categoryPanel = new JPanel();
 		categoryPanel.setLayout(new BoxLayout(categoryPanel, BoxLayout.Y_AXIS));
 		categoryPanel.setBackground(Color.CYAN);
-		
+
 		kategoriaLabels[0].setForeground(Color.RED);
 		
 		for(int i = 0; i < KATEGORITE; i++) {
@@ -95,8 +94,8 @@ public class GUI extends JFrame{
 			kategoriaLabels[i].setMaximumSize(new Dimension(250, 50));
 			categoryPanel.add(kategoriaLabels[i]);
 		}
-		
 		mainPanel.add(categoryPanel);
+
 	}
 	
 	public void addScorePanel() {
@@ -114,7 +113,7 @@ public class GUI extends JFrame{
 			scoreLabels[0][i].setPreferredSize(new Dimension(100, 50));
 			scoreLabels[0][i].setMaximumSize(new Dimension(100, 50));
 			scorePanel[i].add(scoreLabels[0][i]);
-			
+
 			for(int j = 1; j < KATEGORITE; j++) {
 				scoreLabels[j][i] = new JLabel("-");
 				scoreLabels[j][i].setHorizontalAlignment(SwingConstants.CENTER);
