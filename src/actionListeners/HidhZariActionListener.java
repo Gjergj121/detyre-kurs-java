@@ -22,7 +22,7 @@ public class HidhZariActionListener implements ActionListener {
         Random randGen = new Random();
 
         for (int i = 0; i < nrZarave; i++) {
-            if (! diceButtons[i].isSelected()) {
+            if (! diceButtons[i].isSelected()) {  // nqs zari nuk eshte i shtypur nga perdoruesi, ndryshoj vleren
                   diceButtons[i].setValue(randGen.nextInt(6) + 1);
             }
         }

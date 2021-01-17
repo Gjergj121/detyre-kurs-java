@@ -1,7 +1,7 @@
 package dice;
 
 import actionListeners.HidhZariActionListener;
-import dice.DiceButton;
+//import dice.DiceButton;
 
 import java.awt.*;
 import javax.swing.JButton;
@@ -39,6 +39,7 @@ public class Zari {
 		HidhZariActionListener hidhZariActionListener = new HidhZariActionListener(nrZarave, diceButtons);
 		hidhZaratButton.addActionListener(hidhZariActionListener);
 	}
+	
 /*	public void actionPerformed(ActionEvent event) {
 		for(int i = 0; i < 5; i++) {
 			

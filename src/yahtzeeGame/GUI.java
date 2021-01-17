@@ -1,3 +1,5 @@
+package yahtzeeGame;
+
 import dice.Zari;
 
 import java.awt.*;
@@ -9,7 +11,7 @@ public class GUI extends JFrame{
 	Zari dc;
 	JPanel panel, mainPanel, categoryPanel, dicePanel;
 	JPanel[] scorePanel;
-	JLabel[][] scoreLabels;
+	public JLabel[][] scoreLabels;
 	JLabel[] kategoriaLabels = new JLabel[KATEGORITE];
 	JTextField tekst;
 	int numriLojtareve;

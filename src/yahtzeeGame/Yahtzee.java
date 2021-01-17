@@ -1,5 +1,6 @@
-import javax.swing.JFrame;
+package yahtzeeGame;
 
+import javax.swing.JFrame;
 
 public class Yahtzee {
 

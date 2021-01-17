@@ -17,7 +17,7 @@ public class DiceButton extends JButton {
             public void actionPerformed(ActionEvent e) {
                 DiceButton source = (DiceButton) e.getSource();
                 if (source.getValue() > -1) {
-                    source.setSelected(!source.isSelected());
+                    source.setSelected(!source.isSelected()); //ndryshoj gjendjen nqs zari nuk eshte "?"
 
                     if (source.isSelected())
                         source.setRedIcon();
@@ -39,11 +39,11 @@ public class DiceButton extends JButton {
 
     public void setValue(int value) {
         this.value = value;
-        this.setIcon(DiceIcons.diceIcons[value-1]);
+        this.setIcon(DiceIcons.diceIcons[value-1]);   // TODO: ndoshta nuk duhet argumenti?
     }
 
     public void setRedIcon() {
         if (value > -1)
-            this.setIcon(DiceIcons.redDiceIcons[value]);
+            this.setIcon(DiceIcons.redDiceIcons[value-1]);
     }
 }
