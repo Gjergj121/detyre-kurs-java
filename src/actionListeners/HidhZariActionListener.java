@@ -11,6 +11,10 @@ public class HidhZariActionListener implements ActionListener {
 
     private final DiceButton[] diceButtons;
     private final int nrZarave;
+    private final JLabel[][] piketELojtareve = null;
+    private int currentPlayer = 0;
+    private boolean[][] categoryPlayers = new boolean[18][4]; // te gjitha duhen False.
+    private int turni = 0;
 
     public HidhZariActionListener(int nrZarave, DiceButton[] diceButtons) {
         this.nrZarave = nrZarave;

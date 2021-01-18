@@ -1,4 +1,4 @@
-package yahtzeeGame;
+import yahtzeeGame.GUI;
 
 import javax.swing.JFrame;
 

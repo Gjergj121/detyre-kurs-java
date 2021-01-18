@@ -6,16 +6,17 @@ import java.awt.*;
 import javax.swing.*;
 
 public class GUI extends JFrame{
-	final int KATEGORITE = 18;
+	final int NUMRI_KATEGORIVE_PLUS_HEAD = 18;
 	final int NUMRI_ZARAVE = 5;
 	Zari dc;
 	JPanel panel, mainPanel, categoryPanel, dicePanel;
 	JPanel[] scorePanel;
 	public JLabel[][] scoreLabels;
-	JLabel[] kategoriaLabels = new JLabel[KATEGORITE];
+	JLabel[] kategoriaLabels = new JLabel[NUMRI_KATEGORIVE_PLUS_HEAD];
 	JTextField tekst;
 	int numriLojtareve;
-	String[] emri = new String[4];
+	Lojtar[] lojtaret;
+	Loja loja;
 	
 	public GUI(){
 		
@@ -41,16 +42,23 @@ public class GUI extends JFrame{
 			JOptionPane.showMessageDialog(null, "Vendosni numer", title, JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
+
+		lojtaret = new Lojtar[numriLojtareve];
 		
 		if(numriLojtareve <1 || numriLojtareve >4) {
 			JOptionPane.showMessageDialog(null, "Loja Yahtzee mund te luhet me 1-4 lojtare!", title, JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
-		
+
+		String emriTemp;
 		for(int i = 0; i < numriLojtareve; i++) {
-			 emri[i] =  JOptionPane.showInputDialog(null, "Emri i lojtarit "+ (i+1) + ": ", title, JOptionPane.QUESTION_MESSAGE);
+			// TODO: Shto mbiemri mosha
+			emriTemp =  JOptionPane.showInputDialog(null, "Emri i lojtarit "+ (i+1) + ": ", title, JOptionPane.QUESTION_MESSAGE);
+			lojtaret[i] = new Lojtar(emriTemp, "", -1);
 		}
-		
+
+		loja = new Loja(numriLojtareve, NUMRI_ZARAVE, NUMRI_KATEGORIVE_PLUS_HEAD - 1, lojtaret);
+
 	}
 	
 	
@@ -64,24 +72,12 @@ public class GUI extends JFrame{
 	}
 	
 	public void addCategoryPanel() {
+		//TODO: refactor emrat const static
 		kategoriaLabels[0] = new JLabel("Kategorite");
-		kategoriaLabels[1] = new JLabel("Njesha ");
-		kategoriaLabels[2] = new JLabel("Dysha ");
-		kategoriaLabels[3] = new JLabel("Tresha ");
-		kategoriaLabels[4] = new JLabel("Katra ");
-		kategoriaLabels[5] = new JLabel("Pesa ");
-		kategoriaLabels[6] = new JLabel("Gjashta ");
-		kategoriaLabels[7] = new JLabel("Piket e siperme ");
-		kategoriaLabels[8] = new JLabel("Bonus (35) ");
-		kategoriaLabels[9] = new JLabel("Tre me nje vlere ");
-		kategoriaLabels[10] = new JLabel("Kater me nje vlere ");
-		kategoriaLabels[11] = new JLabel("Tre dhe Dy (25) ");
-		kategoriaLabels[12] = new JLabel("Kater te njepasnjeshme (30) ");
-		kategoriaLabels[13] = new JLabel("Pese te njepasnjeshme (40) ");
-		kategoriaLabels[14] = new JLabel("E njejta vlere (50) ");
-		kategoriaLabels[15] = new JLabel("Cdo rast ");
-		kategoriaLabels[16] = new JLabel("Piket e poshtme ");
-		kategoriaLabels[17] = new JLabel("TOTAL ");
+
+		for (int i = 0; i < NUMRI_KATEGORIVE_PLUS_HEAD - 1; i++) {
+			kategoriaLabels[i+1] = new JLabel(Category.CATEGORIES[i]);
+		}
 
 		categoryPanel = new JPanel();
 		categoryPanel.setLayout(new BoxLayout(categoryPanel, BoxLayout.Y_AXIS));
@@ -89,8 +85,7 @@ public class GUI extends JFrame{
 
 		kategoriaLabels[0].setForeground(Color.RED);
 		
-		for(int i = 0; i < KATEGORITE; i++) {
-		//	categoryPanel.add(Box.createGlue());
+		for(int i = 0; i < NUMRI_KATEGORIVE_PLUS_HEAD; i++) {
 			kategoriaLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
 			kategoriaLabels[i].setPreferredSize(new Dimension(200, 50));
 			kategoriaLabels[i].setMaximumSize(new Dimension(250, 50));
@@ -103,20 +98,20 @@ public class GUI extends JFrame{
 	public void addScorePanel() {
 		
 		scorePanel = new JPanel[numriLojtareve];
-		scoreLabels = new JLabel[KATEGORITE][numriLojtareve];
+		scoreLabels = new JLabel[NUMRI_KATEGORIVE_PLUS_HEAD][numriLojtareve];
 		
 		
 		for(int i = 0; i < numriLojtareve; i++) {
 			scorePanel[i] = new JPanel();
 			scorePanel[i].setLayout(new BoxLayout(scorePanel[i], BoxLayout.Y_AXIS));
 			
-			scoreLabels[0][i] = new JLabel(emri[i]); // vendos ne elementin e pare te cdo kolone emrin e lojtarit
+			scoreLabels[0][i] = new JLabel(lojtaret[i].getEmri()); // vendos ne elementin e pare te cdo kolone emrin e lojtarit
 			scoreLabels[0][i].setHorizontalAlignment(SwingConstants.CENTER);
 			scoreLabels[0][i].setPreferredSize(new Dimension(100, 50));
 			scoreLabels[0][i].setMaximumSize(new Dimension(100, 50));
 			scorePanel[i].add(scoreLabels[0][i]);
 
-			for(int j = 1; j < KATEGORITE; j++) {
+			for(int j = 1; j < NUMRI_KATEGORIVE_PLUS_HEAD; j++) {
 				scoreLabels[j][i] = new JLabel("-");
 				scoreLabels[j][i].setHorizontalAlignment(SwingConstants.CENTER);
 				scoreLabels[j][i].setPreferredSize(new Dimension(100, 50));
