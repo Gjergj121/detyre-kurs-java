@@ -41,7 +41,7 @@ public class DiceButton extends JButton {
 
     public void setValue(int value) {
         this.value = value;
-        this.setIcon();   // TODO: ndoshta nuk duhet argumenti?
+        this.setIcon();  
     }
 
     public void resetDice() {

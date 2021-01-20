@@ -128,7 +128,7 @@ public class GUI extends JFrame{
 
 				piketELojtareveLabels[kategoriIndex][lojtarIndex] .setEnabled(false);
 
-				if (lojtarIndex == loja.getCurrentTurn())
+				if (lojtarIndex == loja.getCurrentPlayer()) //TODO: pse getCurrentTurn?? Nuk duhet getCurrentPlayer?
 					piketELojtareveLabels[kategoriIndex][lojtarIndex].setEnabled(true);
 
 				piketPanel[lojtarIndex].add(piketELojtareveLabels[kategoriIndex][lojtarIndex]);
@@ -148,7 +148,7 @@ public class GUI extends JFrame{
 		}
 
 	private JLabel createPiketLojtarLabel(String name) {
-		JLabel lojtarLabel = new JLabel(name); // vendos ne elementin e pare te cdo kolone emrin e lojtarit
+		JLabel lojtarLabel = new JLabel(name); 
 		lojtarLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lojtarLabel.setPreferredSize(new Dimension(100, 50));
 		lojtarLabel.setMaximumSize(new Dimension(100, 50));

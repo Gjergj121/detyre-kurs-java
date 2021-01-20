@@ -22,7 +22,7 @@ public class Loja {
         this.numriKategorive = numriKategorive;
         this.diceState = new int[numriZarave];
         this.pikePerKategoriPerLojtar = new int[numriKategorive][numriLojtareve];
-        kategoriteEZgjedhuraPerLojtar = new boolean[numriKategorive][numriLojtareve];
+        this.kategoriteEZgjedhuraPerLojtar = new boolean[numriKategorive][numriLojtareve];
     }
 
     public boolean[][] getKategoriteEZgjedhuraPerLojtar() {

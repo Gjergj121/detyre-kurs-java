@@ -19,10 +19,18 @@ public class Category {
     	results[0] = llogaritNjeshat(diceState);
     	results[1] = llogaritDyshat(diceState);
     	results[2] = llogaritTreshat(diceState);
-    	// ....
+    	results[3] = llogaritKatrat(diceState);
+    	results[4] = llogaritPesat(diceState);
+    	results[5] = llogaritGjashtat(diceState);
+    	
     	results[8] = llogaritTreMeNjeVlere(diceState);
-    	// Todo continue ...
-
+    	results[9] = llogaritKaterMeNjeVlere(diceState);
+    	results[10] = llogaritTreDheDy(diceState);
+    	results[11] = llogaritKaterTeNjepasnjeshme(diceState);
+    	results[12] = llogaritPeseTeNjepasnjeshme(diceState);
+    	results[13] = llogaritNjejtaVlere(diceState);
+    	results[14] = this.llogaritCdoRast(diceState);
+  
 		return results;
 	}
 
