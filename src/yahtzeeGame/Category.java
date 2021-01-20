@@ -13,9 +13,20 @@ public class Category {
         this.numriZarave = numriZarave;
     }
 
+    public int[] llogaritTeGjithaKategoriteSipasRradhes(int[] diceState) {
+    	int[] results = new int[CATEGORIES.length];
+
+    	results[0] = llogaritNjeshat(diceState);
+    	results[1] = llogaritDyshat(diceState);
+    	results[2] = llogaritTreshat(diceState);
+    	// ....
+    	results[8] = llogaritTreMeNjeVlere(diceState);
+    	// Todo continue ...
+
+		return results;
+	}
+
     public int llogaritNjeshat(int[] diceState) {
-        // TODO: bej logjiken.
-    	
     	int shuma = 0;
     	
     	for(int i = 0; i < numriZarave; i++) {
@@ -99,7 +110,7 @@ public class Category {
     	
     	int shuma = 0;
     	
-    	for(int i = 0; i < 6; i++) {  // Fillon te 0 apo te 1 ??
+    	for(int i = 0; i < 6; i++) {  // TODO: Fillon te 0 apo te 1 ??
     		shuma += pikePerKategoriPerLojtar[i][currentPlayer];
     	}
     	

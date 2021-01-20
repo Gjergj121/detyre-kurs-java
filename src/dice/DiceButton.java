@@ -31,6 +31,8 @@ public class DiceButton extends JButton {
     private void setIcon() {
         if (value > -1)
             this.setIcon(DiceIcons.diceIcons[value-1]);
+        else
+            this.setIcon(DiceIcons.questionMark);
     }
 
     public int getValue() {
@@ -39,7 +41,12 @@ public class DiceButton extends JButton {
 
     public void setValue(int value) {
         this.value = value;
-        this.setIcon(DiceIcons.diceIcons[value-1]);   // TODO: ndoshta nuk duhet argumenti?
+        this.setIcon();   // TODO: ndoshta nuk duhet argumenti?
+    }
+
+    public void resetDice() {
+        this.setSelected(false);
+        this.setValue(-1);
     }
 
     public void setRedIcon() {
