@@ -17,15 +17,14 @@ public class HidhZariActionListener implements ActionListener {
 
     private final DiceButton[] diceButtons;
     private final JLabel[][] piketELojtareve;
-
+    private final JTextField currentTurnTextField;
     private final Loja loja;
-    private Category category;
 
-    public HidhZariActionListener(DiceButton[] diceButtons, Loja loja, JLabel[][] piketELojtareve) {
+    public HidhZariActionListener(DiceButton[] diceButtons, Loja loja, JLabel[][] piketELojtareve, JTextField currentTurnTextField) {
         this.diceButtons = diceButtons;
         this.piketELojtareve = piketELojtareve;
         this.loja = loja;
-        this.category = new Category(loja.getNumriZarave());
+        this.currentTurnTextField = currentTurnTextField;
     }
 
     @Override
@@ -33,6 +32,8 @@ public class HidhZariActionListener implements ActionListener {
         if (loja.getCurrentTurn() > 2){
             return;
         }
+
+        currentTurnTextField.setText("Lojtari " + loja.getLojtaret()[loja.getCurrentPlayer()].getEmri() + " ka turnin!");
 
         Random randGen = new Random();
 
@@ -44,11 +45,15 @@ public class HidhZariActionListener implements ActionListener {
             }
         }
 
-        int[] categoryResults = category.llogaritTeGjithaKategoriteSipasRradhes(loja.getDiceState());
+        int[] categoryResults = loja.llogaritTeGjithaKategoriteSipasRradhes();
 
         updatePiketELojtareve(categoryResults);
 
         loja.nextTurn();
+
+        if (loja.getCurrentTurn() > 2) {
+            currentTurnTextField.setText("Lojtari " + loja.getLojtaret()[loja.getCurrentPlayer()].getEmri() + " mbaroi turnin. Zgjidhni kategorine per piket.");
+        }
     }
 
     private void updatePiketELojtareve(int[] categoryResults) {

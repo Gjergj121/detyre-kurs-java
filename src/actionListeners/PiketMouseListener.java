@@ -2,13 +2,12 @@ package actionListeners;
 
 
 import dice.DiceButton;
-import dice.DiceIcons;
 import yahtzeeGame.Loja;
+import yahtzeeGame.Lojtar;
 
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 import static java.awt.Color.BLACK;
 import static java.lang.Integer.parseInt;
@@ -22,12 +21,14 @@ public class PiketMouseListener extends MouseAdapter {
 
 	private final int kategoriIndex;
 	private final Loja loja;
+	private final JTextField currentTurnTextField;
 
-	public PiketMouseListener(int kategoriIndex, Loja loja, DiceButton[] diceButtons, JLabel[][] piketELojtareve) {
+	public PiketMouseListener(int kategoriIndex, Loja loja, DiceButton[] diceButtons, JLabel[][] piketELojtareve, JTextField currentTurnTextField) {
 		this.loja = loja;
 		this.kategoriIndex = kategoriIndex;
 		this.diceButtons = diceButtons;
 		this.piketELojtareve = piketELojtareve;
+		this.currentTurnTextField = currentTurnTextField;
 	}
 
 	
@@ -41,12 +42,43 @@ public class PiketMouseListener extends MouseAdapter {
 		int piket = value.equals("-") ? 0 : parseInt(value);
 		loja.updatePiket(kategoriIndex, piket);
 
+		source.setText(String.valueOf(piket));
 		source.setForeground(BLACK);
 		source.setEnabled(false);
 
 		resetDiceAndPiket();
 
+		if (loja.isPikeESiperme()) {
+			updateJLabels(loja.getPIKET_E_SIPERME_INDEX(), loja.llogaritDheUpdatePiketESiperme());
+
+			updateJLabels(loja.getBONUS_INDEX(), loja.llogaritDheUpdateBonus());
+		}
+
+		if (loja.isPiketEPoshtme()){
+			updateJLabels(loja.getPIKET_E_POSHTME_INDEX(), loja.llogaritDheUpdatePiketEPoshtme());
+		}
+
+		if (loja.isEndGameForCurrentPlayer()) {
+			updateJLabels(loja.getTOTAL_INDEX(), loja.llogaritDheUpdateTotalin());
+
+			if (loja.getCurrentPlayer() == loja.getNumriLojtareve() - 1)
+				endGame();
+		}
+
 		loja.nextPlayer();
+
+		currentTurnTextField.setText("Lojtari " + loja.getLojtaret()[loja.getCurrentPlayer()].getEmri() + " ka turnin!");
+	}
+
+	private void endGame() {
+		Lojtar fituesi = loja.lojtariFitues();
+		loja.save_totalin();
+		JOptionPane.showMessageDialog(null, "Urime " + fituesi.getEmri() + "! Ju jeni fituesi.");
+	}
+
+	private void updateJLabels(int index, int value) {
+		piketELojtareve[index][loja.getCurrentPlayer()].setText(String.valueOf(value));
+		piketELojtareve[index][loja.getCurrentPlayer()].setEnabled(false);
 	}
 
 	private void resetDiceAndPiket() {

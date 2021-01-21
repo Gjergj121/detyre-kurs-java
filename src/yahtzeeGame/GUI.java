@@ -21,7 +21,7 @@ public class GUI extends JFrame{
 	private JLabel[][] piketELojtareveLabels;
 	private JLabel kategoriaTitle;
 	JLabel[] kategoriaLabels = new JLabel[NUMRI_KATEGORIVE];
-	JTextField currentPlayerName;
+	JTextField currentTurnTextField;
 	Loja loja;
 	
 	public GUI(){
@@ -35,13 +35,22 @@ public class GUI extends JFrame{
 		setHidhZaratButton();
 		addDicePanel();
 
-		//TODO: addListiners method
-		addMouseListenersToScoreLables();
+		addListeners();
 
 		add(panel);
 	}
-	
-	
+
+	private void addListeners() {
+		addHidhZariActionListener();
+		addMouseListenersToScoreLables();
+	}
+
+	private void addHidhZariActionListener() {
+		HidhZariActionListener hidhZariActionListener = new HidhZariActionListener(diceButtons, loja, piketELojtareveLabels, currentTurnTextField);
+		hidhZaratButton.addActionListener(hidhZariActionListener);
+	}
+
+
 	public void fillimiLojes() {
 
 		String title = "Loja Yahtzee";
@@ -142,7 +151,9 @@ public class GUI extends JFrame{
 	private void addMouseListenersToScoreLables() {
 		for(int lojtarIndex = 0; lojtarIndex < loja.getNumriLojtareve(); lojtarIndex++) {
 			for(int kategoriIndex = 0; kategoriIndex < NUMRI_KATEGORIVE; kategoriIndex++) {
-					piketELojtareveLabels[kategoriIndex][lojtarIndex].addMouseListener( new PiketMouseListener(kategoriIndex, loja, diceButtons, piketELojtareveLabels));
+					piketELojtareveLabels[kategoriIndex][lojtarIndex].addMouseListener(
+							new PiketMouseListener(kategoriIndex, loja, diceButtons, piketELojtareveLabels, currentTurnTextField)
+					);
 				}
 			}
 		}
@@ -168,8 +179,9 @@ public class GUI extends JFrame{
 			dicePanel.add(diceButtons[i]);
 		}
 		
-		currentPlayerName = new JTextField();
-		dicePanel.add(currentPlayerName);
+		currentTurnTextField = new JTextField();
+		currentTurnTextField.setText("Lojtari " + loja.getLojtaret()[0].getEmri() + " ka turnin");
+		dicePanel.add(currentTurnTextField);
 		
 		panel.add(dicePanel, BorderLayout.SOUTH);
 	}
@@ -184,8 +196,7 @@ public class GUI extends JFrame{
 
 	private void setHidhZaratButton() {
 		hidhZaratButton = new JButton("Hidh zarat");
-		HidhZariActionListener hidhZariActionListener = new HidhZariActionListener(diceButtons, loja, piketELojtareveLabels);
-		hidhZaratButton.addActionListener(hidhZariActionListener);
+
 	}
 
 }
