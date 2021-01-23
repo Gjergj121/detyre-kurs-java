@@ -32,7 +32,7 @@ public class HidhZariActionListener implements ActionListener {
         if (loja.getCurrentTurn() > 2){
             return;
         }
-
+        
         currentTurnTextField.setText("Lojtari " + loja.getLojtaret()[loja.getCurrentPlayer()].getEmri() + " ka turnin!");
 
         Random randGen = new Random();

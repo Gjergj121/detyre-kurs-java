@@ -12,6 +12,11 @@ import static yahtzeeGame.Category.CATEGORIES;
 public class GUI extends JFrame{
 	private final int NUMRI_KATEGORIVE = 17;
 	private final int NUMRI_ZARAVE = 5;
+	private final int PIKET_E_SIPERME_INDEX = 6;
+    private final int PIKET_E_POSHTME_INDEX = 15;
+    private final int BONUS_INDEX = 7;
+    private final int TOTAL_INDEX = 16;
+    
 	private DiceButton[] diceButtons;
 	private JButton hidhZaratButton;
 	private JPanel panel, mainPanel, categoryPanel, dicePanel;
@@ -137,11 +142,16 @@ public class GUI extends JFrame{
 
 				piketELojtareveLabels[kategoriIndex][lojtarIndex] .setEnabled(false);
 
-				if (lojtarIndex == loja.getCurrentPlayer()) //TODO: pse getCurrentTurn?? Nuk duhet getCurrentPlayer?
+				if (lojtarIndex == loja.getCurrentPlayer()) 
 					piketELojtareveLabels[kategoriIndex][lojtarIndex].setEnabled(true);
 
 				piketPanel[lojtarIndex].add(piketELojtareveLabels[kategoriIndex][lojtarIndex]);
 			}
+			
+			piketELojtareveLabels[PIKET_E_SIPERME_INDEX][lojtarIndex].setEnabled(false);
+			piketELojtareveLabels[BONUS_INDEX][lojtarIndex].setEnabled(false);
+			piketELojtareveLabels[PIKET_E_POSHTME_INDEX][lojtarIndex].setEnabled(false);
+			piketELojtareveLabels[TOTAL_INDEX][lojtarIndex].setEnabled(false);
 
 			mainPanel.add(piketPanel[lojtarIndex]);
 		}	
@@ -181,6 +191,7 @@ public class GUI extends JFrame{
 		
 		currentTurnTextField = new JTextField();
 		currentTurnTextField.setText("Lojtari " + loja.getLojtaret()[0].getEmri() + " ka turnin");
+		currentTurnTextField.setEditable(false);
 		dicePanel.add(currentTurnTextField);
 		
 		panel.add(dicePanel, BorderLayout.SOUTH);

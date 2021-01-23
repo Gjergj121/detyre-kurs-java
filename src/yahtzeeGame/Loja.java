@@ -87,6 +87,19 @@ public class Loja {
     public int getBONUS_INDEX() {
         return BONUS_INDEX;
     }
+    
+    public int getPIKET_E_SIPERME_INDEX() {
+        return PIKET_E_SIPERME_INDEX;
+    }
+
+    public int getPIKET_E_POSHTME_INDEX() {
+        return PIKET_E_POSHTME_INDEX;
+    }
+    
+    public int getTOTAL_INDEX() {
+        return TOTAL_INDEX;
+    }
+
 
     public boolean isPikeESiperme() {
         boolean result = true;
@@ -96,6 +109,16 @@ public class Loja {
         }
 
         return result && !kategoriteEZgjedhuraPerLojtar[PIKET_E_SIPERME_INDEX][currentPlayer];
+    }
+    
+    public boolean isPiketEPoshtme() {
+        boolean result = true;
+
+        for (int i = 8; i < PIKET_E_POSHTME_INDEX; i++) {
+            result &= kategoriteEZgjedhuraPerLojtar[i][currentPlayer];
+        }
+
+        return result && !kategoriteEZgjedhuraPerLojtar[PIKET_E_POSHTME_INDEX][currentPlayer];
     }
 
     public int llogaritDheUpdateBonus() {
@@ -109,41 +132,21 @@ public class Loja {
         updatePiket(PIKET_E_SIPERME_INDEX, piketESiperme);
         return piketESiperme;
     }
-
-    public int llogaritDheUpdateTotalin() {
-        int total = category.llogaritTotal(pikePerKategoriPerLojtar, currentPlayer);
-        updatePiket(TOTAL_INDEX, total);
-        return total;
-    }
-
-    public int getTOTAL_INDEX() {
-        return TOTAL_INDEX;
-    }
+    
 
     public int llogaritDheUpdatePiketEPoshtme() {
         int piketEPoshtme = category.llogaritPiketPoshtme(pikePerKategoriPerLojtar, currentPlayer);
         updatePiket(PIKET_E_POSHTME_INDEX, piketEPoshtme);
         return piketEPoshtme;
     }
+    
 
-    public boolean isPiketEPoshtme() {
-        boolean result = true;
-
-        for (int i = 8; i < PIKET_E_POSHTME_INDEX; i++) {
-            result &= kategoriteEZgjedhuraPerLojtar[i][currentPlayer];
-        }
-
-        return result && !kategoriteEZgjedhuraPerLojtar[PIKET_E_POSHTME_INDEX][currentPlayer];
+    public int llogaritDheUpdateTotalin() {
+        int total = category.llogaritTotal(pikePerKategoriPerLojtar, currentPlayer);
+        updatePiket(TOTAL_INDEX, total);
+        return total;
     }
-
-    public int getPIKET_E_SIPERME_INDEX() {
-        return PIKET_E_SIPERME_INDEX;
-    }
-
-    public int getPIKET_E_POSHTME_INDEX() {
-        return PIKET_E_POSHTME_INDEX;
-    }
-
+   
     public boolean isEndGameForCurrentPlayer() {
         return kategoriteEZgjedhuraPerLojtar[PIKET_E_POSHTME_INDEX][currentPlayer] && kategoriteEZgjedhuraPerLojtar[PIKET_E_SIPERME_INDEX][currentPlayer];
     }

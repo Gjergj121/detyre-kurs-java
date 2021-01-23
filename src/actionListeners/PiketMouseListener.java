@@ -16,6 +16,11 @@ import static java.lang.Integer.valueOf;
 
 public class PiketMouseListener extends MouseAdapter {
 
+	private final int PIKET_E_SIPERME_INDEX = 6;
+    private final int PIKET_E_POSHTME_INDEX = 15;
+    private final int BONUS_INDEX = 7;
+    private final int TOTAL_INDEX = 16;
+	
 	private final DiceButton[] diceButtons;
 	private final JLabel[][] piketELojtareve;
 
@@ -74,6 +79,7 @@ public class PiketMouseListener extends MouseAdapter {
 		Lojtar fituesi = loja.lojtariFitues();
 		loja.save_totalin();
 		JOptionPane.showMessageDialog(null, "Urime " + fituesi.getEmri() + "! Ju jeni fituesi.");
+		System.exit(0);
 	}
 
 	private void updateJLabels(int index, int value) {
@@ -99,7 +105,13 @@ public class PiketMouseListener extends MouseAdapter {
 
 			if (! loja.getKategoriteEZgjedhuraPerLojtar()[i][nextPlayer])
 				piketELojtareve[i][nextPlayer].setEnabled(true);
+			
 		}
+		
+		piketELojtareve[PIKET_E_SIPERME_INDEX][nextPlayer].setEnabled(false);
+		piketELojtareve[BONUS_INDEX][nextPlayer].setEnabled(false);
+		piketELojtareve[PIKET_E_POSHTME_INDEX][nextPlayer].setEnabled(false);
+		piketELojtareve[TOTAL_INDEX][nextPlayer].setEnabled(false);
 	}
 
 }
