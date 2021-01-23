@@ -80,7 +80,7 @@ public class GUI extends JFrame{
 		for(int i = 0; i < numriLojtareve; i++) {
 			// TODO: Shto mbiemri mosha
 			emriTemp =  JOptionPane.showInputDialog(null, "Emri i lojtarit "+ (i+1) + ": ", title, JOptionPane.QUESTION_MESSAGE);
-			lojtaret[i] = new Lojtar(emriTemp, "", -1);
+			lojtaret[i] = new Lojtar(0, emriTemp, "", -1);
 		}
 
 		loja = new Loja(numriLojtareve, NUMRI_ZARAVE, NUMRI_KATEGORIVE, lojtaret);

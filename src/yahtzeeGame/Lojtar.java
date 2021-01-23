@@ -1,17 +1,27 @@
 package yahtzeeGame;
 
 public class Lojtar {
+
+    private int id;
     private String emri;
     private String mbiemri;
     private int mosha;
     private int[] piketEGrumbulluaraNeCdoLoje; //TODO: me vone si ta ruajme kete
     private int piket;
 
-    public Lojtar(String emri, String mbiemri, int mosha) {
+    public Lojtar(int id, String emri, String mbiemri, int mosha) {
         this.emri = emri;
         this.mbiemri = mbiemri;
         this.mosha = mosha;
         piket = 0;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmri() {
