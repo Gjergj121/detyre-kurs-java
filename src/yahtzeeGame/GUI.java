@@ -2,6 +2,8 @@ package yahtzeeGame;
 
 import actionListeners.HidhZariActionListener;
 import actionListeners.PiketMouseListener;
+import actionListeners.SignInActionListener;
+import actionListeners.SignUpActionListener;
 import dice.DiceButton;
 
 import javax.swing.*;
@@ -21,6 +23,9 @@ public class GUI extends JFrame{
 	private JButton hidhZaratButton;
 	private JPanel panel, mainPanel, categoryPanel, dicePanel;
 	private JPanel[] piketPanel;
+	
+	private JDialog dialogFrame;
+	private JButton signIn, signUp, imageButton;
 
 	private JLabel[] emrateElojtareveLabel;
 	private JLabel[][] piketELojtareveLabels;
@@ -31,7 +36,9 @@ public class GUI extends JFrame{
 	
 	public GUI(){
 		fillimiLojes();
-
+		
+		setDialogFrame();
+		
 		panel = new JPanel(new BorderLayout());
 
 		addMainPanel();
@@ -44,6 +51,33 @@ public class GUI extends JFrame{
 
 		add(panel);
 	}
+	
+	
+	public void setDialogFrame() {
+		
+		dialogFrame = new JDialog();
+		dialogFrame.setLayout(new FlowLayout());
+		dialogFrame.setTitle("Regjistrimi");
+		
+		Icon yahtzeeImage = new ImageIcon("src/images/yahtzeePhoto.jpg");
+		
+		imageButton = new JButton(yahtzeeImage);
+		
+		signIn = new JButton("Sign In");
+		signUp = new JButton("Sign Up");
+		
+		signIn.addActionListener(new SignInActionListener(dialogFrame));
+		signUp.addActionListener(new SignUpActionListener(dialogFrame));
+		
+		dialogFrame.add(imageButton);
+		dialogFrame.add(signIn);
+		dialogFrame.add(signUp);
+		
+		dialogFrame.setSize(400, 300);
+		dialogFrame.setVisible(true);
+		
+	}
+	
 
 	private void addListeners() {
 		addHidhZariActionListener();
@@ -76,13 +110,13 @@ public class GUI extends JFrame{
 			System.exit(0);
 		}
 
-		String emriTemp;
+/*		String emriTemp;
 		for(int i = 0; i < numriLojtareve; i++) {
 			// TODO: Shto mbiemri mosha
 			emriTemp =  JOptionPane.showInputDialog(null, "Emri i lojtarit "+ (i+1) + ": ", title, JOptionPane.QUESTION_MESSAGE);
 			lojtaret[i] = new Lojtar(emriTemp, "", -1);
 		}
-
+*/
 		loja = new Loja(numriLojtareve, NUMRI_ZARAVE, NUMRI_KATEGORIVE, lojtaret);
 		emrateElojtareveLabel = new JLabel[numriLojtareve];
 	}
