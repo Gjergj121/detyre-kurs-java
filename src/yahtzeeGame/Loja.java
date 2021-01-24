@@ -1,14 +1,13 @@
 package yahtzeeGame;
 
-import dice.DiceButton;
-
-import java.security.cert.TrustAnchor;
-
 public class Loja {
+    private int id;
     private final int PIKET_E_SIPERME_INDEX = 6;
     private final int PIKET_E_POSHTME_INDEX = 15;
     private final int BONUS_INDEX = 7;
     private final int TOTAL_INDEX = 16;
+    private final int NUMRI_KATEGORIVE = 17;
+    private final int NUMRI_ZARAVE = 5;
 
     private int numriLojtareve;
     private Lojtar[] lojtaret;
@@ -17,19 +16,19 @@ public class Loja {
     private boolean[][] kategoriteEZgjedhuraPerLojtar;
     private int currentTurn = 0;
     private int currentPlayer = 0;
-    private int numriZarave;
-    private int numriKategorive;
     private Category category;
 
-    public Loja(int numriLojtareve, int numriZarave, int numriKategorive, Lojtar[] lojtaret) {
+
+
+    private DBConnector dbConnector;
+
+    public Loja(int id, int numriLojtareve) {
         this.numriLojtareve = numriLojtareve;
-        this.lojtaret = lojtaret;
-        this.numriZarave = numriZarave;
-        this.numriKategorive = numriKategorive;
-        this.diceState = new int[numriZarave];
-        this.pikePerKategoriPerLojtar = new int[numriKategorive][numriLojtareve];
-        this.kategoriteEZgjedhuraPerLojtar = new boolean[numriKategorive][numriLojtareve];
-        this.category = new Category(numriZarave);
+        this.lojtaret = new Lojtar[numriLojtareve];
+        this.diceState = new int[NUMRI_ZARAVE];
+        this.pikePerKategoriPerLojtar = new int[NUMRI_KATEGORIVE][numriLojtareve];
+        this.kategoriteEZgjedhuraPerLojtar = new boolean[NUMRI_KATEGORIVE][numriLojtareve];
+        this.category = new Category(NUMRI_ZARAVE);
     }
 
     public boolean[][] getKategoriteEZgjedhuraPerLojtar() {
@@ -38,6 +37,14 @@ public class Loja {
 
     public void setKategoriteEZgjedhuraPerLojtar(boolean[][] kategoriteEZgjedhuraPerLojtar) {
         this.kategoriteEZgjedhuraPerLojtar = kategoriteEZgjedhuraPerLojtar;
+    }
+
+    public DBConnector getDbConnector() {
+        return dbConnector;
+    }
+
+    public void setDbConnector(DBConnector dbConnector) {
+        this.dbConnector = dbConnector;
     }
 
     public int getNumriLojtareve() {
@@ -68,12 +75,12 @@ public class Loja {
         return currentPlayer;
     }
 
-    public int getNumriZarave() {
-        return numriZarave;
+    public int getNUMRI_ZARAVE() {
+        return NUMRI_ZARAVE;
     }
 
-    public int getNumriKategorive() {
-        return numriKategorive;
+    public int getNUMRI_KATEGORIVE() {
+        return NUMRI_KATEGORIVE;
     }
 
     public void updateDiceState(int i, int randValue) {
@@ -190,7 +197,8 @@ public class Loja {
     }
 
     public void save_totalin() {
-        // TODO: Update databazen
-        return;
+        for (int i = 0; i < numriLojtareve; i++) {
+            dbConnector.insertPike(lojtaret[i].getId(), id, pikePerKategoriPerLojtar[TOTAL_INDEX][i]);
+        }
     }
 }

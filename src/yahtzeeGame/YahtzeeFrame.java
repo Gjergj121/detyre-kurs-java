@@ -11,7 +11,7 @@ import java.awt.*;
 
 import static yahtzeeGame.Category.CATEGORIES;
 
-public class GUI extends JFrame{
+public class YahtzeeFrame extends JFrame{
 	private final int NUMRI_KATEGORIVE = 17;
 	private final int NUMRI_ZARAVE = 5;
 	private final int PIKET_E_SIPERME_INDEX = 6;
@@ -23,9 +23,6 @@ public class GUI extends JFrame{
 	private JButton hidhZaratButton;
 	private JPanel panel, mainPanel, categoryPanel, dicePanel;
 	private JPanel[] piketPanel;
-	
-	private JDialog dialogFrame;
-	private JButton signIn, signUp, imageButton;
 
 	private JLabel[] emrateElojtareveLabel;
 	private JLabel[][] piketELojtareveLabels;
@@ -33,12 +30,11 @@ public class GUI extends JFrame{
 	JLabel[] kategoriaLabels = new JLabel[NUMRI_KATEGORIVE];
 	JTextField currentTurnTextField;
 	Loja loja;
-	
-	public GUI(){
-		fillimiLojes();
-		
-		setDialogFrame();
-		
+
+	public void init(Loja loja){
+		this.loja = loja;
+		emrateElojtareveLabel = new JLabel[loja.getNumriLojtareve()];
+
 		panel = new JPanel(new BorderLayout());
 
 		addMainPanel();
@@ -50,32 +46,10 @@ public class GUI extends JFrame{
 		addListeners();
 
 		add(panel);
-	}
-	
-	
-	public void setDialogFrame() {
-		
-		dialogFrame = new JDialog();
-		dialogFrame.setLayout(new FlowLayout());
-		dialogFrame.setTitle("Regjistrimi");
-		
-		Icon yahtzeeImage = new ImageIcon("src/images/yahtzeePhoto.jpg");
-		
-		imageButton = new JButton(yahtzeeImage);
-		
-		signIn = new JButton("Sign In");
-		signUp = new JButton("Sign Up");
-		
-		signIn.addActionListener(new SignInActionListener(dialogFrame));
-		signUp.addActionListener(new SignUpActionListener(dialogFrame));
-		
-		dialogFrame.add(imageButton);
-		dialogFrame.add(signIn);
-		dialogFrame.add(signUp);
-		
-		dialogFrame.setSize(400, 300);
-		dialogFrame.setVisible(true);
-		
+
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(700, 500);
+		this.setVisible(true);
 	}
 	
 
@@ -87,38 +61,6 @@ public class GUI extends JFrame{
 	private void addHidhZariActionListener() {
 		HidhZariActionListener hidhZariActionListener = new HidhZariActionListener(diceButtons, loja, piketELojtareveLabels, currentTurnTextField);
 		hidhZaratButton.addActionListener(hidhZariActionListener);
-	}
-
-
-	public void fillimiLojes() {
-
-		String title = "Loja Yahtzee";
-		String n = JOptionPane.showInputDialog(null, "Vendosni numrin e lojtareve (1-4): ", title, JOptionPane.QUESTION_MESSAGE);
-		int numriLojtareve = 0;
-
-		try {
-			numriLojtareve = Integer.parseInt(n);
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "Vendosni numer", title, JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
-		}
-
-		Lojtar[] lojtaret = new Lojtar[numriLojtareve];
-		
-		if(numriLojtareve <1 || numriLojtareve >4) {
-			JOptionPane.showMessageDialog(null, "Loja Yahtzee mund te luhet me 1-4 lojtare!", title, JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
-		}
-
-/*		String emriTemp;
-		for(int i = 0; i < numriLojtareve; i++) {
-			// TODO: Shto mbiemri mosha
-			emriTemp =  JOptionPane.showInputDialog(null, "Emri i lojtarit "+ (i+1) + ": ", title, JOptionPane.QUESTION_MESSAGE);
-			lojtaret[i] = new Lojtar(0, emriTemp, "", -1);
-		}
-*/
-		loja = new Loja(numriLojtareve, NUMRI_ZARAVE, NUMRI_KATEGORIVE, lojtaret);
-		emrateElojtareveLabel = new JLabel[numriLojtareve];
 	}
 	
 	

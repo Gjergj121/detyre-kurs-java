@@ -94,7 +94,7 @@ public class PiketMouseListener extends MouseAdapter {
 		int nextPlayer = loja.getNextPlayer();
 		int currentPlayer = loja.getCurrentPlayer();
 
-		for (int i = 0; i < loja.getNumriKategorive(); i++) {
+		for (int i = 0; i < loja.getNUMRI_KATEGORIVE(); i++) {
 
 			if (! loja.getKategoriteEZgjedhuraPerLojtar()[i][currentPlayer]) {
 				piketELojtareve[i][currentPlayer].setText("-");

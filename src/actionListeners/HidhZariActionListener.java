@@ -1,7 +1,6 @@
 package actionListeners;
 
 import dice.DiceButton;
-import yahtzeeGame.Category;
 import yahtzeeGame.Loja;
 
 import javax.swing.*;
@@ -37,7 +36,7 @@ public class HidhZariActionListener implements ActionListener {
 
         Random randGen = new Random();
 
-        for (int i = 0; i < loja.getNumriZarave(); i++) {
+        for (int i = 0; i < loja.getNUMRI_ZARAVE(); i++) {
             if (! diceButtons[i].isSelected()) {  // nqs zari nuk eshte i shtypur nga perdoruesi, ndryshoj vleren
                 int randValue = randGen.nextInt(6) + 1;
                 diceButtons[i].setValue(randValue);

@@ -9,7 +9,15 @@ public class Lojtar {
     private int[] piketEGrumbulluaraNeCdoLoje; //TODO: me vone si ta ruajme kete
     private int piket;
 
+    public Lojtar(String emri, String mbiemri, int mosha) {
+        this.emri = emri;
+        this.mbiemri = mbiemri;
+        this.mosha = mosha;
+        piket = 0;
+    }
+
     public Lojtar(int id, String emri, String mbiemri, int mosha) {
+        this.id = id;
         this.emri = emri;
         this.mbiemri = mbiemri;
         this.mosha = mosha;
