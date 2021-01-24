@@ -56,6 +56,7 @@ public class DBConnector {
 
 	public DBConnector() throws SQLException {
 		conn = getConnection();
+		createTables();
 	}
 
 	/**

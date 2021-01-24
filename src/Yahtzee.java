@@ -13,7 +13,7 @@ public class Yahtzee {
 			e.printStackTrace();
 			System.exit(0);
 		}
-
+		
 		dbConnector.insertLoja();
 		int id = dbConnector.selectCurrentLoja();
 		int numriLojtareve = InputDialogs.getNumriELojtareve();

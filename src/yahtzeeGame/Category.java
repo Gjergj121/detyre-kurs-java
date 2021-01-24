@@ -8,6 +8,7 @@ public class Category {
     };
 
     private int numriZarave;
+    private final int vleraMaxEZarave = 6;
 
     public Category(int numriZarave) {
         this.numriZarave = numriZarave;
@@ -180,7 +181,7 @@ public class Category {
     
     public int llogaritTreDheDy(int[] diceState) {
     	
-    	int[] count = new int[6];
+    	int[] count = new int[vleraMaxEZarave];
     	
     	for(int i = 0; i < numriZarave; i++) {
     		count[diceState[i]-1]++;
@@ -188,7 +189,7 @@ public class Category {
     	
     	boolean njesojDy = false, njesojTre = false;
     	
-    	for(int i = 0; i < 6; i++) {
+    	for(int i = 0; i < vleraMaxEZarave; i++) {
     		
     		if(count[i] == 5) { // 5 numra njesoj
     			return 25;
@@ -213,19 +214,40 @@ public class Category {
     
     public int llogaritKaterTeNjepasnjeshme(int[] diceState) {
     	
-    	if( ( diceState[0]==diceState[1]-1 && diceState[0]==diceState[2]-2 && diceState[0]==diceState[3]-3 ) || 
-    		( diceState[1]==diceState[2]-1 && diceState[1]==diceState[3]-2 && diceState[1]==diceState[4]-3 ) )
-    		return 30;
-    			
+    	int[] count = new int[vleraMaxEZarave];
+    	
+    	for(int i = 0; i < numriZarave; i++) {
+    		count[diceState[i]-1]++;
+    	}
+    	
+    	for(int i = 0; i < vleraMaxEZarave/2; i++) {
+    		
+    		if( count[i]>=1 && count[i+1]>=1 && count[i+2]>=1 && count[i+3]>=1 ) {
+    			return 30;
+    		}
+    		
+    	}
+    		
     	return 0;
     }
     
     
     public int llogaritPeseTeNjepasnjeshme(int[] diceState) {
     	
-    	if( diceState[0]==diceState[1]-1 && diceState[0]==diceState[2]-2 && diceState[0]==diceState[3]-3  && diceState[0]==diceState[4]-4)
-    		return 40;
+    	int[] count = new int[vleraMaxEZarave];
     	
+    	for(int i = 0; i < numriZarave; i++) {
+    		count[diceState[i]-1]++;
+    	}
+    	
+    	for(int i = 0; i < vleraMaxEZarave/2-1; i++) {
+    		
+    		if( count[i]==1 && count[i+1]==1 && count[i+2]==1 && count[i+3]==1 && count[i+4]==1 ) {
+    			return 40;
+    		}
+    		
+    	}
+    		
     	return 0;
     }
     

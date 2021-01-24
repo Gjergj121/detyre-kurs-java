@@ -48,7 +48,7 @@ public class YahtzeeFrame extends JFrame{
 		add(panel);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(700, 500);
+		this.setSize(900, 500);
 		this.setVisible(true);
 	}
 	
@@ -172,7 +172,7 @@ public class YahtzeeFrame extends JFrame{
 		
 		leaderBoard = new JButton("Leaderboard");
 		//addActionListener
-		add(leaderBoard);
+		dicePanel.add(leaderBoard);
 		
 		panel.add(dicePanel, BorderLayout.SOUTH);
 	}
