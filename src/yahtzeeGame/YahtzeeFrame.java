@@ -20,7 +20,7 @@ public class YahtzeeFrame extends JFrame{
     private final int TOTAL_INDEX = 16;
     
 	private DiceButton[] diceButtons;
-	private JButton hidhZaratButton;
+	private JButton hidhZaratButton, leaderBoard;
 	private JPanel panel, mainPanel, categoryPanel, dicePanel;
 	private JPanel[] piketPanel;
 
@@ -169,6 +169,10 @@ public class YahtzeeFrame extends JFrame{
 		currentTurnTextField.setText("Lojtari " + loja.getLojtaret()[0].getEmri() + " ka turnin");
 		currentTurnTextField.setEditable(false);
 		dicePanel.add(currentTurnTextField);
+		
+		leaderBoard = new JButton("Leaderboard");
+		//addActionListener
+		add(leaderBoard);
 		
 		panel.add(dicePanel, BorderLayout.SOUTH);
 	}
