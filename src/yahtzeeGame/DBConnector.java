@@ -159,6 +159,49 @@ public class DBConnector {
 			e.printStackTrace();
 		}
 	}
+	public Lojtar selectMinRecord() {
+		String selectQuery = "SELECT lojtari_id, SUM(piket) as total from piket GROUP BY lojtari_id ORDER BY total ASC LIMIT 1";
+
+		return executeMinMaxRecord(selectQuery);
+	}
+
+	public Lojtar selectMaxRecord() {
+		String selectQuery = "SELECT lojtari_id, SUM(piket) as total from piket GROUP BY lojtari_id ORDER BY total DESC LIMIT 1";
+
+		return executeMinMaxRecord(selectQuery);
+	}
+
+
+	public Lojtar executeMinMaxRecord(String selectQuery) {
+
+		try {
+			ResultSet rs = executeQuery(selectQuery);
+
+			if (!rs.isBeforeFirst())
+				return null;
+
+			rs.next();
+			int lojtariId = rs.getInt("lojtari_id");
+			rs.close();
+
+			return selectLojtariById(lojtariId);
+
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+
+		return null;
+	}
+
+	private Lojtar selectLojtariById(int lojtariId) {
+		String selectQuery = "SELECT * FROM " + this.lojtariTableName + " WHERE id=" + lojtariId;
+		return selectLojtariQuery(selectQuery);
+	}
+
+	public Lojtar selectLojtariByEmri(String emri) {
+		String selectQuery = "SELECT * FROM " + this.lojtariTableName + " WHERE emri='" + emri + "'";
+		return selectLojtariQuery(selectQuery);
+	}
 
 	public List<Integer>  selectPiketPerLojtar(int lojtarId) {
 		String selectQuery = "SELECT piket FROM " + this.piketTableName + " WHERE lojtari_id=" + lojtarId;
@@ -208,17 +251,19 @@ public class DBConnector {
 		}
 	}
 
-	public Lojtar selectLojtariByEmri(String emri) {
-		String selectQuery = "SELECT * FROM " + this.lojtariTableName + " WHERE emri='" + emri + "'";
+	public Lojtar selectLojtariQuery(String selectQuery) {
 		try {
 			// Supozojme qe emri eshte unik
 			ResultSet rs = executeQuery(selectQuery);
+
 			if (!rs.isBeforeFirst())
 				return null;
 
 			rs.next();
 			Lojtar lojtar = new Lojtar(rs.getInt("id"), rs.getString("emri"), rs.getString("mbiemri"), rs.getInt("mosha"));
 			rs.close();
+
+			lojtar.setPiketEGrumbulluaraNeCdoLoje(selectPiketPerLojtar(lojtar.getId()));
 			return lojtar;
 		} catch (SQLException e) {
 			System.out.println("ERROR: Could not execute query.");
@@ -269,4 +314,7 @@ public class DBConnector {
 			throwables.printStackTrace();
 		}
 	}
+
+
+
 }

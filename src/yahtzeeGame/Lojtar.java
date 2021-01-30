@@ -1,12 +1,14 @@
 package yahtzeeGame;
 
+import java.util.List;
+
 public class Lojtar {
 
     private int id;
     private String emri;
     private String mbiemri;
     private int mosha;
-    private int[] piketEGrumbulluaraNeCdoLoje; //TODO: me vone si ta ruajme kete
+    private List<Integer> piketEGrumbulluaraNeCdoLoje; //TODO: me vone si ta ruajme kete
     private int piket;
 
     public Lojtar(String emri, String mbiemri, int mosha) {
@@ -56,11 +58,11 @@ public class Lojtar {
         this.mosha = mosha;
     }
 
-    public int[] getPiketEGrumbulluaraNeCdoLoje() {
+    public  List<Integer> getPiketEGrumbulluaraNeCdoLoje() {
         return piketEGrumbulluaraNeCdoLoje;
     }
 
-    public void setPiketEGrumbulluaraNeCdoLoje(int[] piketEGrumbulluaraNeCdoLoje) {
+    public void setPiketEGrumbulluaraNeCdoLoje( List<Integer> piketEGrumbulluaraNeCdoLoje) {
         this.piketEGrumbulluaraNeCdoLoje = piketEGrumbulluaraNeCdoLoje;
     }
 
@@ -70,5 +72,15 @@ public class Lojtar {
 
     public void setPiket(int piket) {
         this.piket = piket;
+    }
+
+    public int getPiketTotal() {
+        int total = 0;
+
+        for (Integer pike : piketEGrumbulluaraNeCdoLoje) {
+            total += pike;
+        }
+
+        return total;
     }
 }

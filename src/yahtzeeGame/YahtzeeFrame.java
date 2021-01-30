@@ -1,9 +1,6 @@
 package yahtzeeGame;
 
-import actionListeners.HidhZariActionListener;
-import actionListeners.PiketMouseListener;
-import actionListeners.SignInActionListener;
-import actionListeners.SignUpActionListener;
+import actionListeners.*;
 import dice.DiceButton;
 
 import javax.swing.*;
@@ -171,7 +168,7 @@ public class YahtzeeFrame extends JFrame{
 		dicePanel.add(currentTurnTextField);
 		
 		leaderBoard = new JButton("Leaderboard");
-		//addActionListener
+		leaderBoard.addActionListener(new LeaderBoardActionListener(loja.getDbConnector()));
 		dicePanel.add(leaderBoard);
 		
 		panel.add(dicePanel, BorderLayout.SOUTH);
