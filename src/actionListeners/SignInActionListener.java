@@ -24,19 +24,17 @@ public class SignInActionListener implements ActionListener  {
 	
 	public void actionPerformed(ActionEvent event) {
 
-
 		String title = "Yahtzee";
 
-		Lojtar lojtar = null;
 
-		while (lojtar == null) {
-			// TODO: Shto mbiemri mosha
-			String emriTemp = JOptionPane.showInputDialog(null, "Emri i lojtarit " + (lojtarIndex + 1) + ": ", title, JOptionPane.QUESTION_MESSAGE);
+		// TODO: Shto mbiemri mosha
+		String emriTemp = JOptionPane.showInputDialog(null, "Emri i lojtarit " + (lojtarIndex + 1) + ": ", title, JOptionPane.QUESTION_MESSAGE);
 
-			lojtar = dbConnector.selectLojtariByEmri(emriTemp);
+		Lojtar lojtar = dbConnector.selectLojtariByEmri(emriTemp);
 
-			if (lojtar == null)
-				System.out.println("Lojtari nuk u gjet!"); //TODO: ta bejme jdialogpane? apo ta cojme tek sign up?
+		if (lojtar == null) {
+			JOptionPane.showMessageDialog(null, "Lojtari " + emriTemp + " nuk u gjet !", title, JOptionPane.INFORMATION_MESSAGE);
+			return;
 		}
 
 		loja.getLojtaret()[lojtarIndex] = lojtar;
