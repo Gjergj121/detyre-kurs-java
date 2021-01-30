@@ -55,7 +55,7 @@ public class DBConnector {
 	private Connection conn;
 
 	public DBConnector() throws SQLException {
-		conn = getConnection();
+		conn = initConnection();
 		createTables();
 	}
 
@@ -65,16 +65,15 @@ public class DBConnector {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Connection getConnection() throws SQLException {
+	public Connection initConnection() throws SQLException {
 		Properties connectionProps = new Properties();
 		connectionProps.put("user", this.userName);
 		connectionProps.put("password", this.password);
 
-		conn = DriverManager.getConnection("jdbc:mysql://"
+		return DriverManager.getConnection("jdbc:mysql://"
 				+ this.serverName + ":" + this.portNumber + "/" + this.dbName,
 				connectionProps);
 
-		return conn;
 	}
 
 	/**
@@ -87,18 +86,16 @@ public class DBConnector {
 	    Statement stmt = null;
 	    try {
 	        stmt = conn.createStatement();
-	        stmt.executeUpdate(command); // This will throw a SQLException if it fails
+	        stmt.executeUpdate(command);
 	        return true;
 	    } finally {
 
-	    	// This will run whether we throw an exception or not
 	        if (stmt != null) { stmt.close(); }
 	    }
 	}
 
 	private ResultSet executeQuery(String command) throws SQLException {
-		Statement stmt = null;
-		stmt = conn.createStatement();
+		Statement stmt = conn.createStatement();
 		return stmt.executeQuery(command);
 	}
 
