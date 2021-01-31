@@ -12,34 +12,29 @@ public class SignUpActionListener implements ActionListener{
 
 	JDialog dialogFrame;
 	private Loja loja;
-	private int lojtarIndex;
-	private DBConnector dbConnector;
 
-	public SignUpActionListener(JDialog dialogFrame, Loja loja, int lojtarIndex, DBConnector dbConnector) {
+	public SignUpActionListener(JDialog dialogFrame, Loja loja) {
 		this.dialogFrame = dialogFrame;
 		this.loja = loja;
-		this.lojtarIndex = lojtarIndex;
-		this.dbConnector = dbConnector;
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		String title = "Yahtzee";
 
-		String temp = JOptionPane.showInputDialog(null, "Emri,Mbiemri,Mosha e lojtarit " + (lojtarIndex + 1) + ": ", title, JOptionPane.QUESTION_MESSAGE);
+		String temp = JOptionPane.showInputDialog(null, "Emri,Mbiemri,Mosha e lojtarit " + (loja.getLojtaret().size() + 1) + ": ", title, JOptionPane.QUESTION_MESSAGE);
 
-		String[] emerMbiMosha = temp.split(",");
+		String[] emerMbiMosha = temp.split(",\\s*");
 
-		dbConnector.insertLojtari(new Lojtar(emerMbiMosha[0], emerMbiMosha[1], Integer.parseInt(emerMbiMosha[2])));
+		loja.getDbConnector().insertLojtari(new Lojtar(emerMbiMosha[0], emerMbiMosha[1], Integer.parseInt(emerMbiMosha[2])));
 
-		Lojtar lojtar = dbConnector.selectLojtariByEmri(emerMbiMosha[0]); // per ti marre id.
-		//TODO: select piket e grumbulluara.
+		Lojtar lojtar = loja.getDbConnector().selectLojtariByEmri(emerMbiMosha[0]); // per ti marre id.
 
-		loja.getLojtaret()[lojtarIndex] = lojtar;
+		loja.addLojtar(lojtar);
 
 		dialogFrame.setVisible(false);
 
-		if (lojtarIndex < loja.getNumriLojtareve() - 1) {
-			DialogFrame dialogFrame = new DialogFrame(loja, lojtarIndex+1, dbConnector);
+		if (loja.getLojtaret().size() < loja.getNumriLojtareve()) {
+			DialogFrame dialogFrame = new DialogFrame(loja);
 			dialogFrame.initDialogFrame();
 		} else {
 			YahtzeeFrame yahtzeeFrame = new YahtzeeFrame();

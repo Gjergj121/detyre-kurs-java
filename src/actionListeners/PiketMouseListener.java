@@ -66,13 +66,13 @@ public class PiketMouseListener extends MouseAdapter {
 		if (loja.isEndGameForCurrentPlayer()) {
 			updateJLabels(loja.getTOTAL_INDEX(), loja.llogaritDheUpdateTotalin());
 
-			if (loja.getCurrentPlayer() == loja.getNumriLojtareve() - 1)
+			if (loja.getCurrentPlayerIndex() == loja.getNumriLojtareve() - 1)
 				endGame();
 		}
 
 		loja.nextPlayer();
 
-		currentTurnTextField.setText("Lojtari " + loja.getLojtaret()[loja.getCurrentPlayer()].getEmri() + " ka turnin!");
+		currentTurnTextField.setText("Lojtari " + loja.getCurrentPlayer().getEmri() + " ka turnin!");
 	}
 
 	private void endGame() {
@@ -83,8 +83,8 @@ public class PiketMouseListener extends MouseAdapter {
 	}
 
 	private void updateJLabels(int index, int value) {
-		piketELojtareve[index][loja.getCurrentPlayer()].setText(String.valueOf(value));
-		piketELojtareve[index][loja.getCurrentPlayer()].setEnabled(false);
+		piketELojtareve[index][loja.getCurrentPlayerIndex()].setText(String.valueOf(value));
+		piketELojtareve[index][loja.getCurrentPlayerIndex()].setEnabled(false);
 	}
 
 	private void resetDiceAndPiket() {
@@ -92,7 +92,7 @@ public class PiketMouseListener extends MouseAdapter {
 			diceButton.resetDice();
 
 		int nextPlayer = loja.getNextPlayer();
-		int currentPlayer = loja.getCurrentPlayer();
+		int currentPlayer = loja.getCurrentPlayerIndex();
 
 		for (int i = 0; i < loja.getNUMRI_KATEGORIVE(); i++) {
 

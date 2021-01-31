@@ -106,7 +106,7 @@ public class YahtzeeFrame extends JFrame{
 			piketPanel[lojtarIndex] = new JPanel();
 			piketPanel[lojtarIndex].setLayout(new BoxLayout(piketPanel[lojtarIndex], BoxLayout.Y_AXIS));
 
-			emrateElojtareveLabel[lojtarIndex] = createPiketLojtarLabel(loja.getLojtaret()[lojtarIndex].getEmri());
+			emrateElojtareveLabel[lojtarIndex] = createPiketLojtarLabel(loja.getLojtari(lojtarIndex).getEmri());
 
 			piketPanel[lojtarIndex].add(emrateElojtareveLabel[lojtarIndex]);
 
@@ -115,7 +115,7 @@ public class YahtzeeFrame extends JFrame{
 
 				piketELojtareveLabels[kategoriIndex][lojtarIndex] .setEnabled(false);
 
-				if (lojtarIndex == loja.getCurrentPlayer()) 
+				if (lojtarIndex == loja.getCurrentPlayerIndex())
 					piketELojtareveLabels[kategoriIndex][lojtarIndex].setEnabled(true);
 
 				piketPanel[lojtarIndex].add(piketELojtareveLabels[kategoriIndex][lojtarIndex]);
@@ -163,7 +163,7 @@ public class YahtzeeFrame extends JFrame{
 		}
 		
 		currentTurnTextField = new JTextField();
-		currentTurnTextField.setText("Lojtari " + loja.getLojtaret()[0].getEmri() + " ka turnin");
+		currentTurnTextField.setText("Lojtari " + loja.getCurrentPlayer().getEmri() + " ka turnin");
 		currentTurnTextField.setEditable(false);
 		dicePanel.add(currentTurnTextField);
 		

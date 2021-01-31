@@ -5,38 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * This class demonstrates how to connect to MySQL and run some basic commands.
- * 
- * In order to use this, you have to download the Connector/J driver and add
- * its .jar file to your build path.  You can find it here:
- * 
- * http://dev.mysql.com/downloads/connector/j/
- * 
- * You will see the following exception if it's not in your class path:
- * 
- * java.sql.SQLException: No suitable driver found for jdbc:mysql://localhost:3306/
- * 
- * To add it to your class path:
- * 1. Right click on your project
- * 2. Go to Build Path -> Add External Archives...
- * 3. Select the file mysql-connector-java-5.1.24-bin.jar
- *    NOTE: If you have a different version of the .jar file, the name may be
- *    a little different.
- *    
- * The user name and password are both "root", which should be correct if you followed
- * the advice in the MySQL tutorial. If you want to use different credentials, you can
- * change them below. 
- * 
- * You will get the following exception if the credentials are wrong:
- * 
- * java.sql.SQLException: Access denied for user 'userName'@'localhost' (using password: YES)
- * 
- * You will instead get the following exception if MySQL isn't installed, isn't
- * running, or if your serverName or portNumber are wrong:
- * 
- * java.net.ConnectException: Connection refused
- */
 public class DBConnector {
 
 	private final String userName = "gjergj";
@@ -59,12 +27,6 @@ public class DBConnector {
 		createTables();
 	}
 
-	/**
-	 * Get a new database connection
-	 * 
-	 * @return
-	 * @throws SQLException
-	 */
 	public Connection initConnection() throws SQLException {
 		Properties connectionProps = new Properties();
 		connectionProps.put("user", this.userName);
@@ -76,12 +38,6 @@ public class DBConnector {
 
 	}
 
-	/**
-	 * Run a SQL command which does not return a recordset:
-	 * CREATE/INSERT/UPDATE/DELETE/DROP/etc.
-	 * 
-	 * @throws SQLException If something goes wrong
-	 */
 	private boolean executeUpdate(String command) throws SQLException {
 	    Statement stmt = null;
 	    try {
@@ -130,7 +86,7 @@ public class DBConnector {
 		return null;
 	}
 
-	public Lojtar insertLoja() {
+	public Lojtar insertNewLoje() {
 		String insertLoja = "INSERT INTO " + this.lojaTableName + " () VALUES ()";
 		System.out.println(insertLoja);
 		try {
@@ -240,6 +196,7 @@ public class DBConnector {
 		String insertQuery = "INSERT INTO " + this.piketTableName
 				+ " (lojtari_id, loja_id, piket) VALUES (" +
 				lojtarId + ", " + lojaId + ", " + piket + ")";
+		
 		try {
 			executeUpdate(insertQuery);
 		} catch (SQLException e) {

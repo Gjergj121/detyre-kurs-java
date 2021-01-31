@@ -1,5 +1,8 @@
 package yahtzeeGame;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Loja {
     private int id;
     private final int PIKET_E_SIPERME_INDEX = 6;
@@ -10,12 +13,12 @@ public class Loja {
     private final int NUMRI_ZARAVE = 5;
 
     private int numriLojtareve;
-    private Lojtar[] lojtaret;
+    private List<Lojtar> lojtaret;
     private int[] diceState;
     private int[][] pikePerKategoriPerLojtar;
     private boolean[][] kategoriteEZgjedhuraPerLojtar;
     private int currentTurn = 0;
-    private int currentPlayer = 0;
+    private int currentPlayerIndex = 0;
     private Category category;
 
 
@@ -23,8 +26,9 @@ public class Loja {
     private DBConnector dbConnector;
 
     public Loja(int id, int numriLojtareve) {
+        this.id = id;
         this.numriLojtareve = numriLojtareve;
-        this.lojtaret = new Lojtar[numriLojtareve];
+        this.lojtaret = new ArrayList<>();
         this.diceState = new int[NUMRI_ZARAVE];
         this.pikePerKategoriPerLojtar = new int[NUMRI_KATEGORIVE][numriLojtareve];
         this.kategoriteEZgjedhuraPerLojtar = new boolean[NUMRI_KATEGORIVE][numriLojtareve];
@@ -51,7 +55,15 @@ public class Loja {
         return numriLojtareve;
     }
 
-    public Lojtar[] getLojtaret() {
+    public void addLojtar(Lojtar lojtar) {
+        lojtaret.add(lojtar);
+    }
+
+    public Lojtar getLojtari(int index) {
+        return lojtaret.get(index);
+    }
+
+    public List<Lojtar> getLojtaret() {
         return lojtaret;
     }
 
@@ -71,8 +83,12 @@ public class Loja {
         return currentTurn;
     }
 
-    public int getCurrentPlayer() {
-        return currentPlayer;
+    public Lojtar getCurrentPlayer() {
+        return lojtaret.get(getCurrentPlayerIndex());
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
     }
 
     public int getNUMRI_ZARAVE() {
@@ -112,50 +128,50 @@ public class Loja {
         boolean result = true;
 
         for (int i = 0; i < PIKET_E_SIPERME_INDEX; i++) {
-            result &= kategoriteEZgjedhuraPerLojtar[i][currentPlayer];
+            result &= kategoriteEZgjedhuraPerLojtar[i][currentPlayerIndex];
         }
 
-        return result && !kategoriteEZgjedhuraPerLojtar[PIKET_E_SIPERME_INDEX][currentPlayer];
+        return result && !kategoriteEZgjedhuraPerLojtar[PIKET_E_SIPERME_INDEX][currentPlayerIndex];
     }
     
     public boolean isPiketEPoshtme() {
         boolean result = true;
 
         for (int i = 8; i < PIKET_E_POSHTME_INDEX; i++) {
-            result &= kategoriteEZgjedhuraPerLojtar[i][currentPlayer];
+            result &= kategoriteEZgjedhuraPerLojtar[i][currentPlayerIndex];
         }
 
-        return result && !kategoriteEZgjedhuraPerLojtar[PIKET_E_POSHTME_INDEX][currentPlayer];
+        return result && !kategoriteEZgjedhuraPerLojtar[PIKET_E_POSHTME_INDEX][currentPlayerIndex];
     }
 
     public int llogaritDheUpdateBonus() {
-        int bonus = category.llogaritBonus(pikePerKategoriPerLojtar, currentPlayer);
+        int bonus = category.llogaritBonus(pikePerKategoriPerLojtar, currentPlayerIndex);
         updatePiket(BONUS_INDEX, bonus);
         return bonus;
     }
 
     public int llogaritDheUpdatePiketESiperme() {
-        int piketESiperme = category.llogaritPiketSiperme(pikePerKategoriPerLojtar, currentPlayer);
+        int piketESiperme = category.llogaritPiketSiperme(pikePerKategoriPerLojtar, currentPlayerIndex);
         updatePiket(PIKET_E_SIPERME_INDEX, piketESiperme);
         return piketESiperme;
     }
     
 
     public int llogaritDheUpdatePiketEPoshtme() {
-        int piketEPoshtme = category.llogaritPiketPoshtme(pikePerKategoriPerLojtar, currentPlayer);
+        int piketEPoshtme = category.llogaritPiketPoshtme(pikePerKategoriPerLojtar, currentPlayerIndex);
         updatePiket(PIKET_E_POSHTME_INDEX, piketEPoshtme);
         return piketEPoshtme;
     }
     
 
     public int llogaritDheUpdateTotalin() {
-        int total = category.llogaritTotal(pikePerKategoriPerLojtar, currentPlayer);
+        int total = category.llogaritTotal(pikePerKategoriPerLojtar, currentPlayerIndex);
         updatePiket(TOTAL_INDEX, total);
         return total;
     }
    
     public boolean isEndGameForCurrentPlayer() {
-        return kategoriteEZgjedhuraPerLojtar[PIKET_E_POSHTME_INDEX][currentPlayer] && kategoriteEZgjedhuraPerLojtar[PIKET_E_SIPERME_INDEX][currentPlayer];
+        return kategoriteEZgjedhuraPerLojtar[PIKET_E_POSHTME_INDEX][currentPlayerIndex] && kategoriteEZgjedhuraPerLojtar[PIKET_E_SIPERME_INDEX][currentPlayerIndex];
     }
 
     public int[] llogaritTeGjithaKategoriteSipasRradhes() {
@@ -163,22 +179,22 @@ public class Loja {
     }
 
     public void updatePiket(int kategoriIndex, int piket) {
-        pikePerKategoriPerLojtar[kategoriIndex][currentPlayer] = piket;
-        kategoriteEZgjedhuraPerLojtar[kategoriIndex][currentPlayer] = true;
+        pikePerKategoriPerLojtar[kategoriIndex][currentPlayerIndex] = piket;
+        kategoriteEZgjedhuraPerLojtar[kategoriIndex][currentPlayerIndex] = true;
 
     }
 
     public void nextPlayer() {
-        currentPlayer = currentPlayer == numriLojtareve - 1 ? 0 : currentPlayer + 1;
+        currentPlayerIndex = currentPlayerIndex == numriLojtareve - 1 ? 0 : currentPlayerIndex + 1;
         currentTurn = 0;
     }
 
     public int getPrevPlayer() {
-        return currentPlayer == 0 ? numriLojtareve - 1 : currentPlayer - 1;
+        return currentPlayerIndex == 0 ? numriLojtareve - 1 : currentPlayerIndex - 1;
     }
 
     public int getNextPlayer() {
-        return currentPlayer == numriLojtareve - 1 ? 0 : currentPlayer + 1;
+        return currentPlayerIndex == numriLojtareve - 1 ? 0 : currentPlayerIndex + 1;
     }
 
     public Lojtar lojtariFitues() {
@@ -193,12 +209,12 @@ public class Loja {
             }
         }
 
-        return lojtaret[bestPlayer];
+        return lojtaret.get(bestPlayer);
     }
 
     public void save_totalin() {
         for (int i = 0; i < numriLojtareve; i++) {
-            dbConnector.insertPike(lojtaret[i].getId(), id, pikePerKategoriPerLojtar[TOTAL_INDEX][i]);
+            dbConnector.insertPike(lojtaret.get(i).getId(), id, pikePerKategoriPerLojtar[TOTAL_INDEX][i]);
         }
     }
 }

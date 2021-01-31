@@ -32,7 +32,7 @@ public class HidhZariActionListener implements ActionListener {
             return;
         }
         
-        currentTurnTextField.setText("Lojtari " + loja.getLojtaret()[loja.getCurrentPlayer()].getEmri() + " ka turnin!");
+        currentTurnTextField.setText("Lojtari " + loja.getCurrentPlayer().getEmri() + " ka turnin!");
 
         Random randGen = new Random();
 
@@ -51,13 +51,13 @@ public class HidhZariActionListener implements ActionListener {
         loja.nextTurn();
 
         if (loja.getCurrentTurn() > 2) {
-            currentTurnTextField.setText("Lojtari " + loja.getLojtaret()[loja.getCurrentPlayer()].getEmri() + " mbaroi turnin. Zgjidhni kategorine per piket.");
+            currentTurnTextField.setText("Lojtari " + loja.getCurrentPlayer().getEmri() + " mbaroi turnin. Zgjidhni kategorine per piket.");
         }
     }
 
     private void updatePiketELojtareve(int[] categoryResults) {
         for (int i = 0; i < categoryResults.length; i++) {
-            JLabel temp = piketELojtareve[i][loja.getCurrentPlayer()];
+            JLabel temp = piketELojtareve[i][loja.getCurrentPlayerIndex()];
 
             if (temp.isEnabled() ) {
                 if (categoryResults[i] > 0) {

@@ -11,21 +11,13 @@ public class DialogFrame {
     private JDialog dialogFrame;
     private JButton signIn, signUp, imageButton;
     private Loja loja;
-    private int lojtarIndex;
-    private DBConnector dbConnector;
 
 
 
-    public DialogFrame(Loja loja, int lojtarIndex, DBConnector dbConnector) {
-        System.out.println(lojtarIndex);
-        this.lojtarIndex = lojtarIndex;
+    public DialogFrame(Loja loja) {
         this.loja = loja;
-        this.dbConnector = dbConnector;
     }
 
-    public DBConnector getDbConnector() {
-        return dbConnector;
-    }
 
     public JDialog getDialogFrame() {
         return dialogFrame;
@@ -35,7 +27,7 @@ public class DialogFrame {
 
         dialogFrame = new JDialog();
         dialogFrame.setLayout(new FlowLayout());
-        dialogFrame.setTitle("Regjistrimi");
+        dialogFrame.setTitle("Regjistrimi i lojtarit " + (loja.getLojtaret().size() + 1));
 
         Icon yahtzeeImage = new ImageIcon("src/images/yahtzeePhoto.jpg");
 
@@ -44,8 +36,8 @@ public class DialogFrame {
         signIn = new JButton("Sign In");
         signUp = new JButton("Sign Up");
 
-        signIn.addActionListener(new SignInActionListener(dialogFrame, loja, lojtarIndex, dbConnector));
-        signUp.addActionListener(new SignUpActionListener(dialogFrame, loja, lojtarIndex, dbConnector));
+        signIn.addActionListener(new SignInActionListener(dialogFrame, loja));
+        signUp.addActionListener(new SignUpActionListener(dialogFrame, loja));
 
         dialogFrame.add(imageButton);
         dialogFrame.add(signIn);

@@ -8,7 +8,7 @@ public class Lojtar {
     private String emri;
     private String mbiemri;
     private int mosha;
-    private List<Integer> piketEGrumbulluaraNeCdoLoje; //TODO: me vone si ta ruajme kete
+    private List<Integer> piketEGrumbulluaraNeCdoLoje;
     private int piket;
 
     public Lojtar(String emri, String mbiemri, int mosha) {

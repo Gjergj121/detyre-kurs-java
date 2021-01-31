@@ -1,6 +1,7 @@
 import yahtzeeGame.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Yahtzee {
 
@@ -14,16 +15,15 @@ public class Yahtzee {
 			System.exit(0);
 		}
 		
-		dbConnector.insertLoja();
+		dbConnector.insertNewLoje();
 		int id = dbConnector.selectCurrentLoja();
 		int numriLojtareve = InputDialogs.getNumriELojtareve();
 
 		Loja loja = new Loja(id, numriLojtareve);
 		loja.setDbConnector(dbConnector);
 
-		DialogFrame dialogFrame = new DialogFrame(loja, 0, dbConnector);
+		DialogFrame dialogFrame = new DialogFrame(loja);
 		dialogFrame.initDialogFrame();
-
 	}
 
 

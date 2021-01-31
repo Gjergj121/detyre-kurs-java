@@ -11,14 +11,10 @@ public class SignInActionListener implements ActionListener  {
 
 	JDialog dialogFrame;
 	private Loja loja;
-	private int lojtarIndex;
-	private DBConnector dbConnector;
 
-	public SignInActionListener(JDialog dialogFrame, Loja loja, int lojtarIndex, DBConnector dbConnector) {
+	public SignInActionListener(JDialog dialogFrame, Loja loja) {
 		this.dialogFrame = dialogFrame;
 		this.loja = loja;
-		this.lojtarIndex = lojtarIndex;
-		this.dbConnector = dbConnector;
 	}
 	
 	
@@ -27,22 +23,21 @@ public class SignInActionListener implements ActionListener  {
 		String title = "Yahtzee";
 
 
-		// TODO: Shto mbiemri mosha
-		String emriTemp = JOptionPane.showInputDialog(null, "Emri i lojtarit " + (lojtarIndex + 1) + ": ", title, JOptionPane.QUESTION_MESSAGE);
+		String emriTemp = JOptionPane.showInputDialog(null, "Emri i lojtarit " + (loja.getLojtaret().size() + 1) + ": ", title, JOptionPane.QUESTION_MESSAGE);
 
-		Lojtar lojtar = dbConnector.selectLojtariByEmri(emriTemp);
+		Lojtar lojtar = loja.getDbConnector().selectLojtariByEmri(emriTemp);
 
 		if (lojtar == null) {
 			JOptionPane.showMessageDialog(null, "Lojtari " + emriTemp + " nuk u gjet !", title, JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 
-		loja.getLojtaret()[lojtarIndex] = lojtar;
+		loja.addLojtar(lojtar);
 
 		dialogFrame.setVisible(false);
 
-		if (lojtarIndex < loja.getNumriLojtareve() - 1) {
-			DialogFrame dialogFrame = new DialogFrame(loja, lojtarIndex+1, dbConnector);
+		if (loja.getLojtaret().size() < loja.getNumriLojtareve()) {
+			DialogFrame dialogFrame = new DialogFrame(loja);
 			dialogFrame.initDialogFrame();
 		} else {
 			YahtzeeFrame yahtzeeFrame = new YahtzeeFrame();
